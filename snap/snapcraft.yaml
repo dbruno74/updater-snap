@@ -1,0 +1,30 @@
+name: updater-snap
+base: core20 # the base snap is the execution environment for this snap
+version: '1.0' 
+summary: updater snap
+description: |
+  Updater snap
+grade: stable 
+confinement: strict
+
+apps:
+   fwupd-test:
+      command: bin/example
+      plugs: 
+         - fwupd
+         - fwupd-data
+
+parts:
+   example: 
+      plugin: rust
+      source: .
+      build-packages: 
+          - pkg-config
+          - libdbus-1-dev
+          - libssl-dev
+
+plugs:
+        fwupd-data:
+                interface: content
+                content: fwupd-data
+                target: $SNAP_DATA
